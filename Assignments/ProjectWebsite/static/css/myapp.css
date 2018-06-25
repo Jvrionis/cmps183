@@ -1,0 +1,114 @@
+/* line 1, ../sass/_main.scss */
+.colorful {
+  color: #bb8833;
+}
+
+/* line 5, ../sass/_main.scss */
+div.main_content {
+  padding: 400px;
+}
+div.login_button{
+  margin: auto;
+  width: 300px;
+  align-content: center;
+}
+/* line 9, ../sass/_main.scss */
+div.add_btn {
+  margin: 5px;
+}
+/* line 11, ../sass/_main.scss */
+div.add_btn a {
+  padding: 10px;
+}
+
+content {
+  min-height: calc(100vh - 70px);
+}
+
+div.logout{
+  float: right;
+  margin-right: 50px;
+}
+div.top_page{
+  /* margin-left: 270px; */
+  float: right;
+}
+
+body{
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+/* line 16, ../sass/_main.scss */
+div.memo {
+  margin: 5px;
+  border: 2px solid gray;
+  padding: 5px;
+}
+/* line 21, ../sass/_main.scss */
+div.memo div.memo_title {
+  font-weight: bold;
+  font-size: 150%;
+}
+div.signup_button{
+  float: right;
+  width: 300px;
+}
+div.page-title{
+  text-align: center;
+  margin-left: 100px;
+  margin-right: 100px;
+}
+
+div.page-title p{
+  /* background-color: blue; */
+  text-align: center;
+}
+div.about-us{
+  float: left;
+  margin-left: 100px;
+  border: 3px solid green;
+  margin-bottom: 50px;
+}
+div.logo{
+  margin-right:100px ;
+  float: right;
+  width: 300px;
+}
+div.home-images{
+  /* background: white; */
+  width: 95%;
+
+  margin: auto;
+}
+div.information div.established-scholarships{
+  float: right;
+  width: 30px;
+}
+/* line 25, ../sass/_main.scss */
+div.memo div.button_list {
+  text-align: right;
+  margin-top: 10px;
+}
+/* line 27, ../sass/_main.scss */
+div.memo div.button_list div.buttons {
+  display: inline-block;
+}
+/* line 31, ../sass/_main.scss */
+div.memo div.button_list a.btn {
+  padding: 10px;
+}
+div.header{
+  width: 1000px;
+}
+.disabled{
+background-color:#7a7b7c !important;
+color:white;
+cursor: default;
+pointer-events: none;
+}
+img.mySlides{
+  width: 900px;
+}
+.disabled-icon{
+opacity:.5
+}

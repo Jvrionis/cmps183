@@ -1,0 +1,35 @@
+WORK SPLIT UP
+
+HOME PAGE:
+	-should show welcome page and what the site is about then have sign up and login 
+	 options, maybe add some pictures: (DANIEL)
+	-dropdown menu- about us, contact, etc (DANIEL)
+	-sign up as admin...or maybe there should be only one admin account since it's for
+	 one organization so then there's no need to even have the option to sign up as
+	 admin: (NAVEEN)
+
+USER:
+*when you sign up: (pretty much done, but refine it to our project specifications)(JAMES)
+	-first name
+	-last name
+	-email
+	-password
+*once you log in:
+	-the applicant will be able to see available scholarships---maybe we can do a 
+	checkbox of the onces that they want to apply to (NAVEEN)
+	-once they click apply(JAMES):
+		:we need fields like first name, last name, age, ethnicity, parent's marital status,
+		text field for essay
+	-a page that shows their own information(JAMES)
+	-upload a picture(MAYBE)
+	-sms login(MAYBE)
+
+ADMIN:
+*need to create an admin interface for a certain username and password (NAVEEN)
+*can add scholarships which will then show up on the applicant's interface(DANIEL)
+*needs to see all users(NAVEEN)
+*needs to see the user's information when they click on user's name(JAMES)
+	-needs to see all the scholarships the user applied to(DANIEL)
+*download a file that contains the user's information(MAYBE)
+*Make Admin a little more sophisticated (sort admin by names, scholaship type, age, sex w/e)
+

@@ -1,0 +1,119 @@
+{{extend 'layout.html'}}
+
+{{block head}}
+{{end}}
+
+<!--              Private and Public loops              -->
+<div class="main_content">
+
+  <!-- Here goes your main HTML code. -->
+  {{if auth.user is not None:}}
+
+  <div class="add_btn">
+    <a class="btn red rounded" href="{{=URL('default', 'add')}}"><i class="fa fa-plus"></i> Add</a>
+  </div>
+  <h2>Public</h2>
+  {{for cl in checklists:}}
+    {{if cl.is_public is True:}}
+      <div class="memo">
+        <div class="memo_text">
+          <div class="memo_title">{{=cl.title}}</div>
+          <div class="memo_content">{{=cl.memo}}</div>
+        </div>
+        <!-- Edit and Delete buttons for memos -->
+        <div>
+          <div class="button_list">
+          {{if cl.user_email == auth.user.email: }}            
+            <div class="buttons">
+              <a class="btn rounded" href="{{=URL('default', 'edit', args=[cl.id])}}">
+                <i class="fa fa-edit fa-lg"></i>
+              </a>
+              <a class="btn rounded red" href="{{=URL('default', 'delete', args=[cl.id], user_signature=True)}}">
+                <i class="fa fa-trash fa-lg"></i>
+              </a>
+              <a class="btn rounded" href="{{=URL('default', 'toggle_public', args=[cl.id], user_signature=True)}}">
+                <i class="fa fa-users fa-lg"></i>
+              </a>
+            </div>
+          {{pass}}
+          </div>
+        </div>
+      </div>
+    {{pass}}
+  {{pass}}
+
+  <h2>Private</h2>
+  {{for cl2 in checklists:}}
+    {{if cl2.is_public is False:}}
+      <div class="memo">
+        <div class="memo_text">
+          <div class="memo_title">{{=cl2.title}}</div>
+          <div class="memo_content">{{=cl2.memo}}</div>
+        </div>
+        <!-- Edit and Delete buttons for memos -->
+        <div>
+          <div class="button_list">            
+            <div class="buttons">
+              <a class="btn rounded" href="{{=URL('default', 'edit', args=[cl2.id])}}">
+                <i class="fa fa-edit fa-lg"></i>
+              </a>
+              <a class="btn rounded red" href="{{=URL('default', 'delete', args=[cl2.id], user_signature=True)}}">
+                <i class="fa fa-trash fa-lg"></i>
+              </a>
+              <a class="btn rounded" href="{{=URL('default', 'toggle_public', args=[cl2.id], user_signature=True)}}">
+                <i class="fa fa-user fa-lg"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    {{pass}}
+  {{pass}}
+<!--              Private and Public loops              -->
+  {{if not checklists:}}
+
+    <p>You don't have any checklist.  Press on the Add button above to create one.</p>
+
+  {{pass}}
+
+  {{else:}}
+
+   <h1 class="main_title">Welcome!</h1>
+
+  {{for cl3 in checklists:}}
+    {{if cl3.is_public is True:}}
+        <div class="memo">
+        <div class="memo_text">
+          <div class="memo_title">{{=cl3.title}}</div>
+          <div class="memo_content">{{=cl3.memo}}</div>
+        </div>
+        <!-- Edit and Delete buttons for memos -->
+        <div>
+          <div class="button_list">            
+            <div class="buttons">
+              <a class="btn rounded" href="{{=URL('default', 'edit', args=[cl3.id])}}">
+                <i class="fa fa-edit fa-lg"></i>
+              </a>
+              <a class="btn rounded red" href="{{=URL('default', 'delete', args=[cl3.id], user_signature=True)}}">
+                <i class="fa fa-trash fa-lg"></i>
+              </a>
+              <a class="" href="{{=URL('default', 'toggle_public', args=[cl3.id], user_signature=True)}}">
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+  {{pass}}
+  {{pass}}
+    <p class="explanation">This site will help you organize your life by storing your checklists.
+        Please log in to use it.</p>
+
+
+    <div class="login_button">
+        <a href="{{=URL('default', 'user')}}" class="btn">Login</a>
+    </div>
+
+  {{pass}}
+
+</div>

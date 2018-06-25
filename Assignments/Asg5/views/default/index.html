@@ -1,0 +1,118 @@
+{{extend 'layout.html'}}
+
+{{block head}}
+
+
+
+<script src="{{=URL('static', 'js/vue.js')}}"></script>
+<script src="https://checkout.stripe.com/checkout.js"></script>
+
+<script>
+  var images_url = "{{=URL('api', 'get_user_images')}}";
+  var add_image_url = "{{=URL('api', 'add_image', user_signature=True)}}";
+  var get_users = "{{=URL('api', 'get_users')}}";
+  var purchase_url = "{{=URL('default', 'purchase', hmac_key=session.hmac_key)}}"
+</script>
+
+
+{{end}}
+
+<div class="main_content">
+
+  <div id="vue-div" class="display:none">
+      <div class="container padded">
+        <div class="user_space quarter right">
+          <div class="checkout_button quarter">
+              <button class="btn orange" v-on:click="checkout_images">
+                      Checkout
+              </button>
+                <!-- Right part of the page -->
+              <table class="fill" id="user_selector">
+                <tbody>
+                  <tr v-for="user in users" class="center">
+                    <td v-on:click="select_user(user.id )">${user.first_name} ${user.last_name}</td>
+                  </tr>
+                </tbody>
+              </table>
+          </div>
+
+        </div>
+
+        <div class="image_space threequarters">
+          <!-- Left part of the page -->
+          <div v-if="self_page">
+            <!-- Code to upload files, with control buttons -->
+            <div id="uploader_div"  style="display:none">
+              Upload an image file: <input id="file_input" type="file" accept="image/jpeg">
+              Set the price: $$  <input v-model="price" type="number" step="any" min="0">
+              <p> $ ${price}  ${file_input} </p>
+              <!--<input type=”number” v-model="user_image.price" v-on:blur="set_price(images.images_id)"/>-->
+            </div>
+
+            <button v-if="!is_uploading" v-on:click="open_uploader">Add Record</button>
+            <button v-if="is_uploading" v-on:click="upload_file">Submit</button>
+            <button v-if="is_uploading"  v-on:click="close_uploader">Cancel</button>
+          </div>
+
+         <div v-if="page=='prod'" class="image_container">
+           <h2> Available items </h2>
+
+            <ul class="container">
+              <li v-for="image in images" class="card padded quarter">
+                <img v-bind:src="image.image_url" width="100%" class="padded"/>
+                <p> Price: $ ${image.price} </p>
+                <p> ID: ${image.id} </p>
+                <button class="btn" >
+                        <i class="fa fa-lg fa-shopping-cart"></i>
+                        <input type="checkbox" v-on:click="select_image(image.id)">
+                </button>
+
+                <button class="btn" >
+                    <i class="fa fa-lg fa-edit"></i>
+                </button>
+
+                <button class="btn" >
+                        <i class="fa fa-lg fa-trash"></i>
+                </button>
+              </li>
+
+            </ul>
+          </div>
+
+          <div v-if="page=='cart'" class="image_container">
+            <h2 class="bottom"> Shopping Cart  </h2>
+             <ul class="container">
+               <li v-for="image in images_cart" class="card padded quarter">
+                 <img v-bind:src="image.image_url" width="100%" class="padded"/>
+                 <p> Price: $ ${image.price} </p>
+                 <p> ID: ${image.id} </p>
+                 <button class="btn" >
+                         <i class="fa fa-lg fa-shopping-cart"></i>
+                         <input type="checkbox" v-on:click="select_image(image.id)">
+                 </button>
+
+                 <button class="btn" >
+                         <i class="fa fa-lg fa-edit"></i>
+                 </button>
+
+                 <button class="btn" >
+                         <i class="fa fa-lg fa-trash"></i>
+                 </button>
+               </li>
+               <div v-if="images_cart.length > 0" class="total_price">
+                 Your total price: $ ${total}
+                 <button class="btn blue" v-on:click="pay()">
+                     <i class="fa fa-lg fa-credit-card"></i>
+                     Pay
+                 </button>
+               </div>
+
+             </ul>
+
+           </div>
+
+      </div>
+    </div>
+</div>
+
+<script src="{{=URL('static', 'js/default_index.js')}}"></script>

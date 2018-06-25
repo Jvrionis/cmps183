@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+
+{{extend 'layout.html'}}
+
+{{#block head}}
+{{#end}}
+
+  <div class="user_space three wide column">
+  <!-- Here goes your main HTML code. -->
+  {{if auth.user is not None:}}
+    {{if auth.user.email == "scholarship@admin.com":}}
+
+     <h1 style="text-align: center"> Welcome to the administrator page for scholarships. </h1>
+
+     <div class="logout">
+
+       <div class="buttons">
+       <a class="btn btn-danger" href="{{=URL('default', 'user/logout')}}">
+       Log Out
+       </a>
+       </div>
+     </div>
+    <div style="text-align: left;margin-left:auto">
+
+    <div style="text-align:left;2;vertical-align:right; padding: 50px;">
+        <h3>To see a list of the applicants, click on the button below.</h3>
+    <div class="button_list" allign="center">
+      <div class="buttons">
+        <a class="btn btn-primary" href="{{=URL('default', 'see_users')}}">
+        View applicants
+        </a>
+      </div>
+    </div>
+    <br>
+
+    <h3>To establish a scholarship, click on the button below.</h3>
+
+      <div class="buttons">
+        <a class="btn btn-success" href="{{=URL('default', 'add_scholarship')}}">
+        Establish scholarship
+        </a>
+      </div>
+    <br>
+
+    <p class="center">
+    <div class = "established-scholarhips">
+    <h3>To view established scholarships, click on the button below.</h3>
+    <div class="buttons">
+      <a class="btn btn-info" href="{{=URL('default', 'view_scholarships')}}">
+      View scholarships
+      </a>
+      <br>
+    </div>
+    </p>
+      <br>
+    </div>
+
+  {{else:}}
+  <div class = "top_page">
+  <div class="add_btn">
+    <a class="btn btn-primary" href="{{=URL('default', 'add')}}"><i class="fa fa-plus"></i> Edit your Information</a>
+    <a class="btn btn-danger" href="{{=URL('default', 'user/logout')}}">
+    Log Out</a>
+  </div>
+</div>
+
+  <h2> Available Scholarships<br></h2>
+  <table class = "center" id="myTable2">
+    <tr>
+      <th onclick="sortTable(0)">Scholarship Name</th>
+      <th>Description</th>
+      <th>Contact Name</th>
+      <th>Email</th>
+      <th onclick="sortTable(0)">Amount</th>
+    </tr>
+  {{for sl in scholarships:}}
+    <tr>
+      <td>{{=sl.scholarship_name}}</td>
+      <td>{{=sl.information}}</td>
+      <td>{{=sl.contact_name}}</td>
+      <td>{{=sl.contact_email}}</td>
+      <td>{{=sl.scholarship_amount}}</td>
+    </tr>
+    {{pass}}
+  </table>
+  <!-- source: w3 schools -->
+  <script>
+  function sortTable(n) {
+    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+    table = document.getElementById("myTable2");
+    switching = true;
+    // Set the sorting direction to ascending:
+    dir = "asc";
+    /* Make a loop that will continue until
+    no switching has been done: */
+    while (switching) {
+      // Start by saying: no switching is done:
+      switching = false;
+      rows = table.getElementsByTagName("TR");
+      /* Loop through all table rows (except the
+      first, which contains table headers): */
+      for (i = 1; i < (rows.length - 1); i++) {
+        // Start by saying there should be no switching:
+        shouldSwitch = false;
+        /* Get the two elements you want to compare,
+        one from current row and one from the next: */
+        x = rows[i].getElementsByTagName("TD")[n];
+        y = rows[i + 1].getElementsByTagName("TD")[n];
+        /* Check if the two rows should switch place,
+        based on the direction, asc or desc: */
+        if (dir == "asc") {
+          if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+            // If so, mark as a switch and break the loop:
+            shouldSwitch = true;
+            break;
+          }
+        } else if (dir == "desc") {
+          if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+            // If so, mark as a switch and break the loop:
+            shouldSwitch = true;
+            break;
+          }
+        }
+        if (Number(x.innerHTML) > Number(y.innerHTML)) {
+          shouldSwitch = true;
+          break;
+        }
+      }
+      if (shouldSwitch) {
+        /* If a switch has been marked, make the switch
+        and mark that a switch has been done: */
+        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+        switching = true;
+        // Each time a switch is done, increase this count by 1:
+        switchcount ++;
+      } else {
+        /* If no switching has been done AND the direction is "asc",
+        set the direction to "desc" and run the while loop again. */
+        if (switchcount == 0 && dir == "asc") {
+          dir = "desc";
+          switching = true;
+        }
+      }
+    }
+  }
+  </script>
+
+  {{pass}}
+
+  {{elif auth.user is None:}}
+  <div class = "page-title">
+   <h1 style="text-align:center" class="main_title" >Welcome to Greek Orthodox Scholarships!</h1>
+    <p style="text-align:center" class="explanation">Sign Up to see which scholarships we offer!</p>
+  </div>
+    <div class="login_button center">
+        <a href="{{=URL('default', 'user')}}" class="btn btn-danger btn-lg">Login</a>
+        <a href="{{=URL('default', 'user/register')}}" class="btn btn-info btn-lg">Sign Up</a>
+    </div>
+  <style>
+      .container {
+          position: relative;
+          width: 100%;
+      }
+
+      .image {
+        opacity: 1;
+        display: block;
+        width: 100%;
+        height: auto;
+        transition: .5s ease;
+        backface-visibility: hidden;
+      }
+
+      .middle {
+        transition: .1s ease;
+        opacity: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        text-align: center;
+      }
+
+      .container:hover .image {
+        opacity: 0.7;
+      }
+
+      .container:hover .middle {
+        opacity: 1;
+      }
+
+      .text {
+        background-color: teal;
+        color: white;
+        font-size: 40px;
+        padding: 32px 64px;
+      }
+      .clearfix {
+          overflow: auto;
+      }
+      .footer {
+        clear:both;
+        position: absolute;
+        width: 100%;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
+      }
+
+      .left-sidebar{
+        height: 100%;
+        background-color: white;
+        width: 50px;
+        margin-top: -80px;
+        margin-bottom: -80px;
+        float: left;
+        clear: both;
+      }
+      .right-sidebar{
+        height: 100%;
+        background-color: white;
+        width: 50px;
+        margin-top: -80px;
+        margin-bottom: -80px;
+        float: right;
+      }
+      .ml-0 {
+         margin-left: 99% !important;
+      }
+      .centerbox {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+      }
+      </style>
+
+      <div class ="home-images" style="max-width:100%">
+        <div class="container clearfix">
+          <img class="image" alt="Philanthropy" src="../static/images/Penelope.jpg" style="width:100%"/>
+          <div class="middle">
+            <div class="text">PHILANTHROPY</div>
+            <br>
+            <font face="arial" size="5" color="white" sans-serif>Enriching communities where we live </font>
+          </div>
+        </div>
+      <div class="container clearfix">
+        <img class="image" alt="Education" src="../static/images/Scholarship.jpg" style="width:100%"/>
+        <div class="middle">
+          <div class="text">EDUCATION</div>
+          <br>
+          <font face="arial" size="5" color="white" sans-serif>Advancing people through higher education</font>
+        </div>
+      </div>
+      <div class="container clearfix">
+        <img class="image" alt="Literacy" src="../static/images/BookClub-1.jpg" style="width:100%"/>
+        <div class="middle">
+          <div class="text">LITERACY</div>
+          <br>
+          <font face="arial" size="5" color="white" sans-serif>Strengthening literacy & reading</font>
+        </div>
+      </div>
+
+  </div>
+
+ <script>
+  var myIndex = 0;
+  carousel();
+  function carousel() {
+    var i;
+    var x = document.getElementsByClassName("image");
+    for (i = 0; i < x.length; i++) {
+      x[i].style.display = "none";
+    }
+    myIndex++;
+    if (myIndex > x.length) {myIndex = 1}
+    x[myIndex-1].style.display = "block";
+    setTimeout(carousel, 4000); // Change image every 2 seconds
+  }
+  var slideIndex = 1;
+  showDivs(slideIndex);
+
+  function plusDivs(n) {
+    showDivs(slideIndex += n);
+  }
+
+  function showDivs(n) {
+    var i;
+    var x = document.getElementsByClassName("image");
+    if (n > x.length) {slideIndex = 1}
+    if (n < 1) {slideIndex = x.length}
+    for (i = 0; i < x.length; i++) {
+      x[i].style.display = "none";
+    }
+    x[slideIndex-1].style.display = "block";
+  }
+</script>
+
+  <div class="container">
+  <div class="half left" style="display:block">
+
+    <p><h2 class="center"><font size="10" sans-serif> About Us</font></h2></p>
+    <p class="center"><font size="3" sans-serif>
+      The DOP foundation was founded in 1983 to promote social,
+      ethical, philanthropic, cultural, educational and intellectual interests of
+      its members. The Foundation also preserves and promotes the ideals
+      and traditions of Hellenism.</font> </p>
+      <p class="center"><font size="3" sans-serif>
+        The foundation is a 501(c)3 Charitable Foundation and is,
+        therefore, able to issue tax deductible receipts for all donations.
+      </font></p>
+      <p class="center"><font size="3" sans-serif>
+        The Daughters of Penelope Foundation, Inc. works hand-in-hand with the
+        Daughters of Penelope and serves its members, and the citizen’s where our
+        members reside, world-wide.
+      </font></p>
+  </div>
+  <div class="half ">
+    <img src="../static/images/Logo_aboutus2.jpg" style="width:100%"/>
+  </div>
+</div>
+  {{pass}}
+
+</div>
+
+</body>
+
+</html>
